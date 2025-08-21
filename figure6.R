@@ -22,23 +22,23 @@ figure6 <- url |>
   readSDMX() |>
   as_tibble() |>
   transmute(
-    TITLE_FR = str_remove(TITLE_FR, "All households"),
-    TITLE_FR = str_extract(TITLE_FR, "Actual rents|Overall"),
-    TITLE_FR = factor(TITLE_FR,
-                      levels = c("Actual rents", "Overall"),
-                      labels = c("Actual rents", "Overall CPI (IPC)")),
+    TITLE_EN = str_remove(TITLE_EN, "All households"),
+    TITLE_EN = str_extract(TITLE_EN, "Actual rentals for housing|All items"),
+    TITLE_EN = factor(TITLE_EN,
+                      levels = c("Actual rentals for housing", "All items"),
+                      labels = c("Actual rentals for housing", "Overall CPI")),
     date = as.Date(paste0(TIME_PERIOD, "-01")),
     OBS_VALUE = as.numeric(OBS_VALUE)
   ) |>
   filter(date >= min_date, date <= max_date) |>
-  group_by(TITLE_FR) |>
+  group_by(TITLE_EN) |>
   arrange(date) |>
   mutate(OBS_VALUE = 100 * OBS_VALUE / OBS_VALUE[1]) |>
   ungroup()
 
 # ---- Graph ----
 
-ggplot(figure6, aes(x = date, y = OBS_VALUE, color = TITLE_FR)) +
+ggplot(figure6, aes(x = date, y = OBS_VALUE, color = TITLE_EN)) +
   geom_line(size = 1) +
   scale_color_manual(
     values = viridis(3)[1:2]
