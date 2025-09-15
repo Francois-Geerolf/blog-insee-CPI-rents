@@ -62,6 +62,6 @@ ggplot(figure7, aes(x = date, y = OBS_VALUE, color = TITLE_EN)) +
 
 # ---- Export ----
 
-ggsave("figure7.png", width = 7.5, height = 4.2)
+ggsave("figure7.png", width = 7.5, height = 4.2, bg = "white")
 ggsave("figure7.pdf", width = 7.5, height = 4.2, device = cairo_pdf)
 
